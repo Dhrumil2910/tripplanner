@@ -1,0 +1,100 @@
+.ui.container {
+    margin-top: 7em;
+    width: 68%;
+}
+
+.own-class-sidebar {
+    color: #00ab6b;
+}
+
+.own-class-home {
+    color: #00ab6b;
+}
+
+.own-no-of-notes {
+    color: grey;
+    font-size: 0.8em;
+}
+
+.own-class-block {
+    color: #00ab6b;
+}
+
+.own-class-smile {
+    color: #00ab6b;
+}
+
+.own-class-search {
+    color: #00ab6b;
+}
+
+.own-header-name {
+	font-family: 'Inconsolata', monospace;
+	font-size: 1.8em;
+	font-weight: bold;
+}
+
+.own-site-icon {
+	color: #00ab6b;
+	width: 2em;
+	height: 2em;
+}
+
+.own-filter-icon {
+	color : grey;
+}
+
+.own-travel-icon {
+	color : grey;
+	margin-right: -1em;
+}
+
+.own-top-hr { 
+	z-index: 1000000;
+    display: block;
+    position: fixed;
+    height: 0.2em;
+    margin-top: 0em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #00ab6b;
+}
+
+.own-menu-bar{
+	padding-left: 15%;
+	padding-right: 15%;
+}
+
+.own-heading{
+	color: #9c9c9c;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.own-main-menu{
+	border-style: none;
+	box-shadow: none;
+}
+
+.own-card-hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #efefef;
+    padding: 0;
+}
+
+.own-add-button {
+    position: fixed;
+    bottom: 3%;
+    right: 16%; 
+}
+
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+.own-add-modal{
+    width: 10%;
+}

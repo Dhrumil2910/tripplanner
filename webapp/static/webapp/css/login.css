@@ -1,0 +1,53 @@
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../images/travel-hd.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.own-header-name {
+    font-family: 'Inconsolata', monospace;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.own-site-icon {
+    color: #00ab6b;
+    width: 2em;
+    height: 2em;
+}
+
+.own-menu-bar {
+    padding-left: 15%;
+    padding-right: 15%;
+    box-shadow: none;
+    border-style: none;
+}
+
+.ui.container {
+    margin-top: 15em;
+    width: 68%;
+}
+
+.main-tagline {
+	font-family: 'Open Sans', sans-serif;
+	color: #e4e4e4;
+	text-align: center;
+	font-size: 5em;
+}
+
+.own-login-button {
+	background-color: #00ab6b;
+	color: #00ab6b;
+
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.own-login-modal{
+	width: 30%;
+}
+.own-register-modal{
+	width: 30%;
+}

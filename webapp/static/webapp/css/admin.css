@@ -1,0 +1,7 @@
+.ui.container {
+	margin-top: 6em;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}

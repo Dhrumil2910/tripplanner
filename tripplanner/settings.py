@@ -25,7 +25,7 @@ SECRET_KEY = 'x63w@lj9p(3_o-k5v8aehckg_4(-5f4$uhb)436d9f7+(isyg7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [u'10.42.0.1', u'localhost']
 
 
 # Application definition
@@ -38,9 +38,47 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'oauth2_provider',
+    'social_django',
+    'rest_framework_social_oauth2',
     'coreapi',
     'webapp',
+    'django_extensions',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ),
+}
+
+AUTHENTICATION_BACKENDS = (
+    # Facebook OAuth2
+    'social_core.backends.facebook.FacebookAppOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = '/login'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/terminate'
+
+SOCIAL_AUTH_KEY = 'f8tBA9Iu5Pc5WuexrsxwWvHmIKQuwCIyLdfdfrIW'
+SOCIAL_AUTH_SECRET = 'cqv8cmrKUQjG6r5JyoFcrvB1M6epBe9MoPFlnlToSQueQqKTd1rvTwHOZQ14FtYwiGyDgDwGAxm7QqbB3cPTLShV1OxsuPuAGg4mfsWqkhYIEtBh1lBAYNE9tTUwzNr0'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1016070501821816'
+SOCIAL_AUTH_FACEBOOK_SECRET = '34cd34e52b76643a0bf6b64f670ccd91'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, email'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

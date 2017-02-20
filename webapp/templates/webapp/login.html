@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> TripView </title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "webapp/css/login.css" %}">
+</head>
+
+<body>
+    <div class="ui basic icon top fixed borderless menu own-menu-bar" style="background: rgba(255,255,255, 0);">
+        <div class="item">
+            <i class="send big icon own-site-icon"></i>
+        </div>
+        <div class="item">
+            <h4 class="header own-header-name" style="color: #00ab6b ">
+            	<b>Tripview</b>
+            </h4>
+        </div>
+        <div class="right menu">
+            <div class="item">
+            </div>
+            <a class="ui item" style="color: grey">
+      			Admin
+    		</a>
+        </div>
+    </div>
+    <div class="ui container">
+        <p class="main-tagline"> Plan Your Trips Efficiently</p>
+        <button class="ui button own-login-button" style="background: #00ab6b; color: white; margin-left: 38%"> Login </button>
+        <button class="ui button own-register-button" style="background: #00ab6b; color: white; margin-left: 2%"> Register </button>
+        <div class="ui modal own-login-modal" style="width: 40%; margin-left: -20%">
+            <div class="header" style="background: #00ab6b ;color: white">Login</div>
+            <div class="content" >
+                <form id="own-login-form" class="ui form own-login-form">
+                    <div class="field">
+                        <label>User Name</label>
+                        <input type="text" name="username" placeholder="First Name">
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                </form>
+            </div>
+            <div class="actions">
+                <div id="own-login" class="ui approve button own-login-approve-button" style="background: #00ab6b; color: white;">Login</div>
+                <div id="facebook-login" class="ui approve button own-login-approve-button" style="background: #00ab6b; color: white;">Facebook</div>
+                <div id="google-login" class="ui approve button own-login-approve-button" style="background: #00ab6b; color: white;">Google</div>
+            </div>
+        </div>
+        <div class="ui modal own-register-modal" style="width: 40%; margin-left: -20%">
+            <div class="header" style="background: white ;color: #00ab6b">Register</div>
+            <div class="content" >
+                <form id="own-register-form" class="ui form own-register-form"> {% csrf_token %}
+                    <div class="field">
+                        <label>User Name</label>
+                        <input type="text" name="username" placeholder="First Name">
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                    <div class="field">
+                        <label>Re-enter password</label>
+                        <input type="password" name="confirm-password" placeholder="Re-enter password">
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden">
+                            <label>I agree to the Terms and Conditions</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="actions">
+                <div id="own-register" class="ui approve button own-register-approve-button" style="background: #00ab6b; color: white;">Register</div>
+            </div>
+        </div>
+    </div>
+	<script
+	  src="https://code.jquery.com/jquery-3.1.1.min.js"
+	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	  crossorigin="anonymous"></script>    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script type="text/javascript" src="{% static "webapp/js/login.js" %}"></script>
+</body>
+
+</html>

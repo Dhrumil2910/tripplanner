@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+    <title> Trip Planner </title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css"> -->
+    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" /> {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "webapp/css/jquery.datetimepicker.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "webapp/css/main.css" %}">
+</head>
+
+<body>
+    <!-- Top Menu Bar -->
+    <hr class="own-top-hr">
+    <div class="ui basic icon top fixed borderless menu own-menu-bar" style="background: white">
+        <div class="item">
+            <i class="send big icon own-site-icon"></i>
+        </div>
+        <div class="item">
+            <h4 class="header own-header-name" style="color: #00ab6b ">
+                <b>tripview</b>
+            </h4>
+        </div>
+        
+    </div>
+    <div class="ui container">
+        <div class="ui grid">
+            <div class="ten wide column">
+                <div class="ui dropdown">
+                    <input type="hidden" name="filters">
+                    <span class="text own-heading">Your Trips</span>
+                    <i class="ui travel icon own-travel-icon" style="margin-left: 0.8em "></i>
+                </div>
+            </div>
+            <div class="two wide column">
+                <div class="ui dropdown own-mode-dropdown" style="float: right">
+                    <input type="hidden" name="filters">
+                    <span class="text" style="color: grey; font-size: 1em; margin-top: 1em">Mode</span>
+                    <div class="menu">
+                        <div class="scrolling menu">
+                            <div class="item" data-value="plane">
+                                <i class="ui plane icon"> </i> Flight
+                            </div>
+                            <div class="item" data-value="train">
+                                <i class="ui train icon"> </i> Train
+                            </div>
+                            <div class="item" data-value="bus">
+                                <i class="ui bus icon"> </i> Bus
+                            </div>
+                            <div class="item" data-value="car">
+                                <i class="ui car icon"> </i> Car
+                            </div>
+                            <div class="item" data-value="bicycle">
+                                <i class="ui bicycle icon"> </i> Cycle
+                            </div>
+                            <div class="item" data-value="All">
+                                <i class="ui green circle icon"> </i> All
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="two wide column">
+                <div class="ui dropdown own-trip-dropdown" style="margin-left: 1em">
+                    <input type="hidden" name="filters">
+                    <span class="text" style="color: grey; font-size: 1em; margin-top: 1em">All Trips</span>
+                    <div class="menu">
+                        <div class="scrolling menu">
+                            <div class="item" data-value="past">
+                                Past Trips
+                            </div>
+                            <div class="item" data-value="All">
+                                All Trips
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="one wide column">
+                <div class="ui dropdown own-month-dropdown">
+                    <input type="hidden" name="filters">
+                    <span class="text" style="color: grey; font-size: 1em; margin-top: 1em">Month</span>
+                    <div class="menu">
+                        <div class="scrolling menu">
+                            <div class="item" data-value="All">
+                                All
+                            </div>
+                            <div class="item" data-value="01">
+                                January
+                            </div>
+                            <div class="item" data-value="02">
+                                February
+                            </div>
+                            <div class="item" data-value="03">
+                                March
+                            </div>
+                            <div class="item" data-value="04">
+                                April
+                            </div>
+                            <div class="item" data-value="05">
+                                May
+                            </div>
+                            <div class="item" data-value="06">
+                                June
+                            </div>
+                            <div class="item" data-value="07">
+                                July
+                            </div>
+                            <div class="item" data-value="08">
+                                August
+                            </div>
+                            <div class="item" data-value="09">
+                                September
+                            </div>
+                            <div class="item" data-value="10">
+                                October
+                            </div>
+                            <div class="item" data-value="11">
+                                November
+                            </div>
+                            <div class="item" data-value="12">
+                                December
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="one wide column">
+                <i class="ui filter icon own-filter-icon" style="margin-top: 1em"></i>
+            </div>
+        </div>
+        <div style="width: 100%; height: 10px; border-bottom: 1px solid #dfdfdf; text-align: center">
+            <!-- <span style="font-size: 1.5em; background-color: #F3F5F6; padding: 0 10px; color: #898989;">
+                January 2017
+            </span> -->
+        </div>
+        <div class="ui relaxed divided items own-list-of-trips">
+        </div>
+        <div class="own-add-button" style="width: 4em; height: 4em;background: #00ab6b; border-radius: 100%; padding: 16px 16px 16px 12px">
+            <a href="#"><i class="plus big icon" style="color: white"></i></a>
+        </div>
+        <div class="ui modal own-edit-modal" style="width: 30%; margin-left: -14%">
+            <div class="header" style="color:#00ab6b ">Edit Trip</div>
+            <div class="content">
+                <form class="ui form own-edit-trip-form">
+                    <div class="field">
+                        <label>Destination</label>
+                        <input type="text" id="own-edit-destination" name="Destination" placeholder="Destination">
+                    </div>
+                    <div class="field">
+                        <label>Date</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" id="own-edit-start-time" name="start_date" placeholder="Start Time">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" id="own-edit-end-time" name="end_date" placeholder="End Time">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Mode of Transportation</label>
+                        <div class="ui selection dropdown own-edit-mode-trans-dropdown">
+                            <input type="hidden" name="mode" id="own-edit-transport-mode">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Mode</div>
+                            <div class="menu">
+                                <div class="item" data-value="plane">Flight</div>
+                                <div class="item" data-value="bus">Bus</div>
+                                <div class="item" data-value="car">Car</div>
+                                <div class="item" data-value="bicycle">Cycle</div>
+                                <div class="item" data-value="train">Train</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Comment</label>
+                        <textarea type="text" id="own-edit-comment" name="comment" placeholder="Any Comment..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="actions">
+                <div class="ui approve button own-edit-trip-button" style="background:#00ab6b;color: white ">Edit Trip</div>
+            </div>
+        </div>
+        <div class="ui modal own-add-modal" style="width: 30%; margin-left: -14%">
+            <div class="header" style="color:#00ab6b ">Add a Trip</div>
+            <div class="content">
+                <form id="add-trip-form" class="ui form own-add-trip-form">
+                    <div class="field">
+                        <label>Destination</label>
+                        <input type="text" id="own-destination" name="destination" placeholder="Destination">
+                    </div>
+                    <div class="field">
+                        <label>Date</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" id="own-start-time" name="start_date" placeholder="Start Time">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" id="own-end-time" name="end_date" placeholder="End Time">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Mode of Transportation</label>
+                        <div class="ui selection dropdown own-mode-trans-dropdown">
+                            <input type="hidden" name="mode" id="own-transport-mode">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Mode</div>
+                            <div class="menu">
+                                <div class="item" data-value="plane">Flight</div>
+                                <div class="item" data-value="bus">Bus</div>
+                                <div class="item" data-value="car">Car</div>
+                                <div class="item" data-value="bicycle">Cycle</div>
+                                <div class="item" data-value="train">Train</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Comment</label>
+                        <textarea type="text" id="own-comment" name="comment" placeholder="Any Comment..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="actions">
+                <div id="add-trip-btn" class="ui approve button own-add-trip-button" style="background:#00ab6b;color: white ">Add Trip</div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+    <script type="text/javascript" src="{%static "webapp/js/jquery.datetimepicker.full.min.js" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/main.js" %}"></script>
+</body>
+
+</html>

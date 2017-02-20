@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+    <title> User Manager </title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css">
+    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.semanticui.min.css" />
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "webapp/css/um.css" %}">
+</head>
+
+<body>
+    <div class="ui basic icon top fixed borderless menu own-menu-bar" style="background: white">
+        <div class="item">
+            <i class="bar chart big icon own-site-icon"></i>
+        </div>
+        <div class="item">
+            <h4 class="header own-header-name" style="color: #00ab6b ">
+                <b>User Manager</b>
+            </h4>
+        </div>
+        <div class="item ">
+            <a href="#" class="active item own-get-users">Users</a>
+        </div>
+
+        <div class="right menu">
+            <a class="ui item" style="color: grey">
+                Logout
+            </a>
+        </div>
+    </div>
+    <div class="ui container">
+        <div id='own-table-content'>
+        </div>
+    </div>
+
+    <div class="ui modal own-edit-users-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+        <div class="header" style="color:#00ab6b ">Edit User</div>
+        <div class="content">
+            <form class="ui form own-edit-user-form">
+                <div class="field">
+                    <label>User Name</label>
+                    <input type="text" id="own-edit-user-name" name="user-name" placeholder="User Name">
+                </div>
+                <div class="field">
+                    <label>Name</label>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" id="own-edit-first-name" name="first-name" placeholder="First Name">
+                        </div>
+                        <div class="field">
+                            <input type="text" id="own-edit-last-name" name="last-name" placeholder="Last Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="text" id="own-edit-email" name="email" placeholder="Email Address">
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui approve button own-edit-user-button" style="background:#00ab6b;color: white ">Edit User</div>
+        </div>
+    </div>
+    <div class="ui modal own-add-users-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+        <div class="header" style="color:#00ab6b ">Add User</div>
+        <div class="content">
+            <form class="ui form own-add-user-form">
+                <div class="field">
+                    <label>User Name</label>
+                    <input type="text" id="own-add-user-name" name="user-name" placeholder="User Name">
+                </div>
+                <div class="field">
+                    <label>Name</label>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" id="own-add-first-name" name="first-name" placeholder="First Name">
+                        </div>
+                        <div class="field">
+                            <input type="text" id="own-add-last-name" name="last-name" placeholder="Last Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" id="own-add-email" name="email" placeholder="Email Address">
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui approve submit button own-add-user-button" style="background:#00ab6b;color: white ">Add User</div>
+        </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+    <script type="text/javascript" src="{%static "webapp/js/jquery.datetimepicker.full.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "webapp/js/um.js" %}"></script>
+
+</body>
+
+</html>
