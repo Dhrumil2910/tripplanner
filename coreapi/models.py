@@ -4,7 +4,7 @@ from django.core.validators import ValidationError
 
 
 class Trip(models.Model):
-    owner = models.ForeignKey('auth.User', related_name='owner',
+    owner = models.ForeignKey('auth.User', related_name='trips',
                                 on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField()

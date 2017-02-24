@@ -144,10 +144,10 @@
         <div class="ui modal own-edit-modal" style="width: 30%; margin-left: -14%">
             <div class="header" style="color:#00ab6b ">Edit Trip</div>
             <div class="content">
-                <form class="ui form own-edit-trip-form">
+                <form class="ui form own-edit-trip-form" id="edit-trip-form">
                     <div class="field">
                         <label>Destination</label>
-                        <input type="text" id="own-edit-destination" name="Destination" placeholder="Destination">
+                        <input type="text" id="own-edit-destination" name="destination" placeholder="Destination">
                     </div>
                     <div class="field">
                         <label>Date</label>
@@ -245,8 +245,11 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
     <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
-    <script type="text/javascript" src="{%static "webapp/js/jquery.datetimepicker.full.min.js" %}"></script>
-    <script type="text/javascript" src="{%static "webapp/js/main.js" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/global-dependency/jquery.datetimepicker.full.min.js" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/global-dependency/settings.json" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/global-dependency/common.js" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/users/xternal-users.js" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/users/main.js" %}"></script>
 </body>
 
 </html>

@@ -1,287 +1,299 @@
-<!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<head>
-    <title> Admin </title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-    <!-- <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css"> -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css">
-    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.semanticui.min.css" /> {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static "webapp/css/jquery.datetimepicker.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "webapp/css/admin.css" %}">
+{% extends 'webapp/admin-um.html' %} 
+{% load static %} 
+{% block load_css_file %}
+<link rel="stylesheet" type="text/css" href="{% static "webapp/css/admin.css" %}"> {% endblock %}
 </head>
+{% block load_menu_bar %}
+<div class="item">
+    <h4 class="header own-header-name" style="color: #00ab6b ">
+        <b>Admin</b>
+    </h4>
+</div>
+<div class="item ">
+    <a href="#" class="active item own-get-users">Users</a>
+</div>
+<div class="item ">
+    <a href="#" class="item own-get-user-mang">User Managers</a>
+</div>
+<div class="item ">
+    <a href="#" class="item own-get-all-trips">All Trips</a>
+</div>
+<div class="right menu">
+    <div class="item">
+        <div class='ui icon transparent input'>
+            <input type='text' placeholder='Search ...' ' id='search_input'/>
+        <i class='search icon '></i>
+    </div>
+</div>
+<div class="item">
+    <div class="ui floating dropdown labeled icon button own-search-dropdown">
+  <i class="filter icon"></i>
+  <span class="text">Users</span>
+  <div class="menu">
+    <div class="scrolling menu">
+      <div class="active item">
+        Users
+      </div>
+      <div class="item">
+        Managers
+      </div>
+      <div class="item">
+        Trips
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+    <a class="ui item" id="logout_button" style="color: grey">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block load_modal %}
+<div class="ui modal own-add-trips-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+    <div class="header" style="color:#00ab6b ">Add Trip</div>
+    <div class="content">
+        <form class="ui form own-add-trip-form">
+            <div class="field">
+                <label>User</label>
+                <input type="text" id="own-add-owner" name="owner" placeholder="User">
+            </div>
+            <div class="field">
+                <label>Destination</label>
+                <input type="text" id="own-add-destination" name="destination" placeholder="Destination">
+            </div>
+            <div class="field">
+                <label>Date</label>
+                <div class="two fields">
+                    <div class="field">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" id="own-add-start-time" name="start_date" placeholder="Start Time">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" id="own-add-end-time" name="end_date" placeholder="End Time">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Mode of Transportation</label>
+                <div class="ui selection dropdown own-add-mode-trans-dropdown">
+                    <input type="hidden" name="mode" id="own-add-transport-mode">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Mode</div>
+                    <div class="menu">
+                        <div class="item" data-value="plane">Flight</div>
+                        <div class="item" data-value="bus">Bus</div>
+                        <div class="item" data-value="car">Car</div>
+                        <div class="item" data-value="bicycle">Cycle</div>
+                        <div class="item" data-value="train">Train</div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Comment</label>
+                <textarea type="text" id="own-add-comment" name="comment" placeholder="Any Comment..."></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui approve button own-add-trip-button" style="background:#00ab6b;color: white ">Add Trip</div>
+    </div>
+</div>
+<div class="ui modal own-edit-trips-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+    <div class="header" style="color:#00ab6b ">Edit Trip</div>
+    <div class="content">
+        <form class="ui form own-edit-trip-form">
+            <div class="field">
+                <label>User</label>
+                <input type="text" id="own-edit-owner" name="owner" placeholder="User">
+            </div>
+            <div class="field">
+                <label>Destination</label>
+                <input type="text" id="own-edit-destination" name="destination" placeholder="Destination">
+            </div>
+            <div class="field">
+                <label>Date</label>
+                <div class="two fields">
+                    <div class="field">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" id="own-edit-start-time" name="start_date" placeholder="Start Time">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" id="own-edit-end-time" name="end_date" placeholder="End Time">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Mode of Transportation</label>
+                <div class="ui selection dropdown own-edit-mode-trans-dropdown">
+                    <input type="hidden" name="mode" id="own-edit-transport-mode">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Mode</div>
+                    <div class="menu">
+                        <div class="item" data-value="plane">Flight</div>
+                        <div class="item" data-value="bus">Bus</div>
+                        <div class="item" data-value="car">Car</div>
+                        <div class="item" data-value="bicycle">Cycle</div>
+                        <div class="item" data-value="train">Train</div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Comment</label>
+                <textarea type="text" id="own-edit-comment" name="comment" placeholder="Any Comment..."></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui approve button own-edit-trip-button" style="background:#00ab6b;color: white ">Edit Trip</div>
+    </div>
+</div>
+<div class="ui modal own-edit-users-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+    <div class="header" style="color:#00ab6b ">Edit User</div>
+    <div class="content">
+        <form class="ui form own-edit-user-form">
+            <div class="field">
+                <label>User Name</label>
+                <input type="text" id="own-edit-user-name" name="username" placeholder="User Name">
+            </div>
+            <div class="field">
+                <label>Name</label>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" id="own-edit-first-name" name="first_name" placeholder="First Name">
+                    </div>
+                    <div class="field">
+                        <input type="text" id="own-edit-last-name" name="last_name" placeholder="Last Name">
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="text" id="own-edit-email" name="email" placeholder="Email Address">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" id="own-edit-password" name="password" placeholder="Password">
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui approve button own-edit-user-button" style="background:#00ab6b;color: white ">Edit User</div>
+    </div>
+</div>
+<div class="ui modal own-add-users-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+    <div class="header" style="color:#00ab6b ">Add User</div>
+    <div class="content">
+        <form class="ui form own-add-user-form">
+            <div class="field">
+                <label>User Name</label>
+                <input type="text" id="own-add-user-name" name="username" placeholder="User Name">
+            </div>
+            <div class="field">
+                <label>Name</label>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" id="own-add-first-name" name="first_name" placeholder="First Name">
+                    </div>
+                    <div class="field">
+                        <input type="text" id="own-add-last-name" name="last_name" placeholder="Last Name">
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="text" id="own-add-email" name="email" placeholder="Email Address">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" id="own-add-password" name="password" placeholder="Password">
+            </div>
 
-<body>
-    <div class="ui basic icon top fixed borderless menu own-menu-bar" style="background: white">
-        <div class="item">
-            <i class="bar chart big icon own-site-icon"></i>
-        </div>
-        <div class="item">
-            <h4 class="header own-header-name" style="color: #00ab6b ">
-                <b>Admin</b>
-            </h4>
-        </div>
-        <div class="item ">
-            <a href="#" class="active item own-get-users">Users</a>
-        </div>
-        <div class="item ">
-            <a href="#" class="item own-get-user-mang">User Managers</a>
-        </div>
-        <div class="item ">
-            <a href="#" class="item own-get-all-trips">All Trips</a>
-        </div>
-        <div class="right menu">
-            <a class="ui item" id="logout_button" style="color: grey">
-                Logout
-            </a>
-        </div>
+        </form>
     </div>
-    <div class="ui container">
-        <div id='own-table-content'>
-        </div>
+    <div class="actions">
+        <div class="ui approve button own-add-user-button" style="background:#00ab6b;color: white ">Add User</div>
     </div>
-    <div class="ui modal own-add-trips-modal" style="width: 30%; margin-left: -14%;margin-top: ">
-        <div class="header" style="color:#00ab6b ">Add Trip</div>
-        <div class="content">
-            <form class="ui form own-add-trip-form">
-                <div class="field">
-                    <label>User</label>
-                    <input type="text" id="own-add-owner" name="owner" placeholder="User">
-                </div>
-                <div class="field">
-                    <label>Destination</label>
-                    <input type="text" id="own-add-destination" name="destination" placeholder="Destination">
-                </div>
-                <div class="field">
-                    <label>Date</label>
-                    <div class="two fields">
-                        <div class="field">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" id="own-add-start-time" name="start_date" placeholder="Start Time">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" id="own-add-end-time" name="end_date" placeholder="End Time">
-                            </div>
-                        </div>
+</div>
+<div class="ui modal own-add-um-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+    <div class="header" style="color:#00ab6b ">Edit User</div>
+    <div class="content">
+        <form class="ui form own-add-um-form">
+            <div class="field">
+                <label>User Name</label>
+                <input type="text" id="own-add-um-user-name" name="username" placeholder="User Name">
+            </div>
+            <div class="field">
+                <label>Name</label>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" id="own-add-um-first-name" name="first_name" placeholder="First Name">
+                    </div>
+                    <div class="field">
+                        <input type="text" id="own-add-um-last-name" name="last_name" placeholder="Last Name">
                     </div>
                 </div>
-                <div class="field">
-                    <label>Mode of Transportation</label>
-                    <div class="ui selection dropdown own-add-mode-trans-dropdown">
-                        <input type="hidden" name="mode" id="own-add-transport-mode">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">Mode</div>
-                        <div class="menu">
-                            <div class="item" data-value="plane">Flight</div>
-                            <div class="item" data-value="bus">Bus</div>
-                            <div class="item" data-value="car">Car</div>
-                            <div class="item" data-value="bicycle">Cycle</div>
-                            <div class="item" data-value="train">Train</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Comment</label>
-                    <textarea type="text" id="own-add-comment" name="comment" placeholder="Any Comment..."></textarea>
-                </div>
-            </form>
-        </div>
-        <div class="actions">
-            <div class="ui approve button own-add-trip-button" style="background:#00ab6b;color: white ">Add Trip</div>
-        </div>
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="text" id="own-add-um-email" name="email" placeholder="Email Address">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" id="own-add-um-password" name="password" placeholder="Password">
+            </div>
+        </form>
     </div>
-    <div class="ui modal own-edit-trips-modal" style="width: 30%; margin-left: -14%;margin-top: ">
-        <div class="header" style="color:#00ab6b ">Edit Trip</div>
-        <div class="content">
-            <form class="ui form own-edit-trip-form">
-                <div class="field">
-                    <label>User</label>
-                    <input type="text" id="own-edit-owner" name="owner" placeholder="User">
-                </div>
-                <div class="field">
-                    <label>Destination</label>
-                    <input type="text" id="own-edit-destination" name="destination" placeholder="Destination">
-                </div>
-                <div class="field">
-                    <label>Date</label>
-                    <div class="two fields">
-                        <div class="field">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" id="own-edit-start-time" name="start_date" placeholder="Start Time">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui input left icon">
-                                <i class="calendar icon"></i>
-                                <input type="text" id="own-edit-end-time" name="end_date" placeholder="End Time">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Mode of Transportation</label>
-                    <div class="ui selection dropdown own-edit-mode-trans-dropdown">
-                        <input type="hidden" name="mode" id="own-edit-transport-mode">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">Mode</div>
-                        <div class="menu">
-                            <div class="item" data-value="plane">Flight</div>
-                            <div class="item" data-value="bus">Bus</div>
-                            <div class="item" data-value="car">Car</div>
-                            <div class="item" data-value="bicycle">Cycle</div>
-                            <div class="item" data-value="train">Train</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Comment</label>
-                    <textarea type="text" id="own-edit-comment" name="comment" placeholder="Any Comment..."></textarea>
-                </div>
-            </form>
-        </div>
-        <div class="actions">
-            <div class="ui approve button own-edit-trip-button" style="background:#00ab6b;color: white ">Edit Trip</div>
-        </div>
+    <div class="actions">
+        <div class="ui approve button own-add-um-button" style="background:#00ab6b;color: white ">Edit User</div>
     </div>
-    <div class="ui modal own-edit-users-modal" style="width: 30%; margin-left: -14%;margin-top: ">
-        <div class="header" style="color:#00ab6b ">Edit User</div>
-        <div class="content">
-            <form class="ui form own-edit-user-form">
-                <div class="field">
-                    <label>User Name</label>
-                    <input type="text" id="own-edit-user-name" name="username" placeholder="User Name">
-                </div>
-                <div class="field">
-                    <label>Name</label>
-                    <div class="two fields">
-                        <div class="field">
-                            <input type="text" id="own-edit-first-name" name="first_name" placeholder="First Name">
-                        </div>
-                        <div class="field">
-                            <input type="text" id="own-edit-last-name" name="last_name" placeholder="Last Name">
-                        </div>
+</div>
+<div class="ui modal own-edit-um-modal" style="width: 30%; margin-left: -14%;margin-top: ">
+    <div class="header" style="color:#00ab6b ">Edit User</div>
+    <div class="content">
+        <form class="ui form own-edit-um-form">
+            <div class="field">
+                <label>User Name</label>
+                <input type="text" id="own-edit-um-user-name" name="username" placeholder="User Name">
+            </div>
+            <div class="field">
+                <label>Name</label>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" id="own-edit-um-first-name" name="first_name" placeholder="First Name">
+                    </div>
+                    <div class="field">
+                        <input type="text" id="own-edit-um-last-name" name="last_name" placeholder="Last Name">
                     </div>
                 </div>
-                <div class="field">
-                    <label>Email</label>
-                    <input type="text" id="own-edit-email" name="email" placeholder="Email Address">
-                </div>
-            </form>
-        </div>
-        <div class="actions">
-            <div class="ui approve button own-edit-user-button" style="background:#00ab6b;color: white ">Edit User</div>
-        </div>
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <input type="text" id="own-edit-um-email" name="email" placeholder="Email Address">
+            </div>
+        </form>
     </div>
-    <div class="ui modal own-add-users-modal" style="width: 30%; margin-left: -14%;margin-top: ">
-        <div class="header" style="color:#00ab6b ">Add User</div>
-        <div class="content">
-            <form class="ui form own-add-user-form">
-                <div class="field">
-                    <label>User Name</label>
-                    <input type="text" id="own-add-user-name" name="username" placeholder="User Name">
-                </div>
-                <div class="field">
-                    <label>Name</label>
-                    <div class="two fields">
-                        <div class="field">
-                            <input type="text" id="own-add-first-name" name="first_name" placeholder="First Name">
-                        </div>
-                        <div class="field">
-                            <input type="text" id="own-add-last-name" name="last_name" placeholder="Last Name">
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Email</label>
-                    <input type="text" id="own-add-email" name="email" placeholder="Email Address">
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <input type="password" id="own-add-password" name="password" placeholder="Password">
-                </div>
-            </form>
-        </div>
-        <div class="actions">
-            <div class="ui approve button own-add-user-button" style="background:#00ab6b;color: white ">Add User</div>
-        </div>
+    <div class="actions">
+        <div class="ui approve button own-edit-um-button" style="background:#00ab6b;color: white ">Edit User</div>
     </div>
-    <div class="ui modal own-add-um-modal" style="width: 30%; margin-left: -14%;margin-top: ">
-        <div class="header" style="color:#00ab6b ">Edit User</div>
-        <div class="content">
-            <form class="ui form own-add-um-form">
-                <div class="field">
-                    <label>User Name</label>
-                    <input type="text" id="own-add-um-user-name" name="username" placeholder="User Name">
-                </div>
-                <div class="field">
-                    <label>Name</label>
-                    <div class="two fields">
-                        <div class="field">
-                            <input type="text" id="own-add-um-first-name" name="first_name" placeholder="First Name">
-                        </div>
-                        <div class="field">
-                            <input type="text" id="own-add-um-last-name" name="last_name" placeholder="Last Name">
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Email</label>
-                    <input type="text" id="own-add-um-email" name="email" placeholder="Email Address">
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <input type="password" id="own-add-um-password" name="password" placeholder="Password">
-                </div>
-            </form>
-        </div>
-        <div class="actions">
-            <div class="ui approve button own-add-um-button" style="background:#00ab6b;color: white ">Edit User</div>
-        </div>
-    </div>
-    <div class="ui modal own-edit-um-modal" style="width: 30%; margin-left: -14%;margin-top: ">
-        <div class="header" style="color:#00ab6b ">Edit User</div>
-        <div class="content">
-            <form class="ui form own-edit-um-form">
-                <div class="field">
-                    <label>User Name</label>
-                    <input type="text" id="own-edit-um-user-name" name="username" placeholder="User Name">
-                </div>
-                <div class="field">
-                    <label>Name</label>
-                    <div class="two fields">
-                        <div class="field">
-                            <input type="text" id="own-edit-um-first-name" name="first_name" placeholder="First Name">
-                        </div>
-                        <div class="field">
-                            <input type="text" id="own-edit-um-last-name" name="last_name" placeholder="Last Name">
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Email</label>
-                    <input type="text" id="own-edit-um-email" name="email" placeholder="Email Address">
-                </div>
-            </form>
-        </div>
-        <div class="actions">
-            <div class="ui approve button own-edit-um-button" style="background:#00ab6b;color: white ">Edit User</div>
-        </div>
-    </div>
-    <!-- All the static file dependencies -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
-    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
-    <script type="text/javascript" src="{%static "webapp/js/jquery.datetimepicker.full.min.js" %}"></script>
-    <script type="text/javascript" src="{% static "webapp/js/admin.js" %}"></script>
+</div>
+{% endblock %}
+
+<!-- All the static file dependencies -->
+{% block load_js_file %}
+<script type="text/javascript" src="{% static "webapp/js/admin/xternal-admin.js" %}"></script>
+<script type="text/javascript" src="{% static "webapp/js/admin/admin.js" %}"></script>
+{% endblock %}
 </body>
 
 </html>

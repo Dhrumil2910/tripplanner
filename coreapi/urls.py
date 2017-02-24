@@ -1,18 +1,27 @@
 from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from coreapi import views
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    url(r'^trips/$', views.TripList.as_view()),
-    url(r'^trips/(?P<pk>[0-9]+)/$', views.TripDetail.as_view()),
-    url(r'^user/$', views.isUserAuthenticated),
-    url(r'^user/info', views.userMetaInfo),
-    url(r'^admin/users/$', views.UserList.as_view()),
-    url(r'^admin/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
-    url(r'^admin/staff/$', views.StaffList.as_view()),
-    url(r'^admin/staff/(?P<pk>[0-9]+)/$', views.StaffDetail.as_view()),
-    url(r'^admin/trips/$', views.TripListAdmin.as_view()),
-    url(r'^admin/trips/(?P<pk>[0-9]+)/$', views.TripDetailAdmin.as_view()),
+from coreapi import views, views_devs
+
+
+router = DefaultRouter()
+router.register(r'trips', views.TripViewSet, base_name='trip')
+router.register(r'devs/users', views_devs.UserViewSet, base_name='dev/users')
+router.register(r'devs/trips', views_devs.TripViewSet, base_name='dev/trips')
+urlpatterns = router.urls
+
+urlpatterns += [
+    url(r'^user/$', views.user_details),
+]
+
+urlpatterns += [
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
+    url(r'^auth/', include('social_django.urls', namespace='social'))
+]
+
+urlpatterns += [
+    url(r'^register/', views.register)
 ]
 
 # urlpatterns += [
@@ -20,9 +29,4 @@ urlpatterns = [
 #                                namespace='rest_framework')),
 # ]
 
-urlpatterns += [
-    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
-    url(r'^auth/', include('social_django.urls', namespace='social'))
-]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
+# urlpatterns = format_suffix_patterns(urlpatterns)

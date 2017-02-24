@@ -1,97 +1,72 @@
 from django.contrib.auth.models import User
-from rest_framework import generics
-from rest_framework import permissions
-from rest_framework.decorators import api_view
+from django.utils.datastructures import MultiValueDictKeyError
+from rest_framework import viewsets
+from rest_framework.decorators import api_view, throttle_classes
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
+from rest_framework import status
 
 from coreapi.models import Trip
 from coreapi.serializers import TripSerializer, UserSerializer
-from coreapi.permissions import IsOwner, IsAdmin, IsStaff
+from coreapi.permissions import IsOwner
+from coreapi.throttles import RegistrationBurstRateThrottle, RegistrationSustainedRateThrottle
 
 
-class TripList(generics.ListCreateAPIView):
+class TripViewSet(viewsets.ModelViewSet):
     serializer_class = TripSerializer
     permission_classes = (IsOwner,)
+    filter_backends = (SearchFilter,)
+    search_fields = ('destination', 'comment', 'mode', 'owner__username')
 
     def get_queryset(self):
         """
         Return queryset for the current user.
         """
         user = self.request.user
-        return Trip.objects.filter(owner=user.id)
+        return Trip.objects.filter(owner=user.id).order_by('-created')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
-class TripDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = TripSerializer
-    permission_classes = (IsOwner,)
-
-    def get_queryset(self):
-        """
-        Return queryset for the current user.
-        """
-        user = self.request.user
-        return Trip.objects.filter(owner=user.id)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-
-class UserList(generics.ListCreateAPIView):
-    permission_classes = (IsStaff,)
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsStaff,)
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class StaffList(generics.ListCreateAPIView):
-    permission_classes = (IsAdmin,)
-    queryset = User.objects.filter(is_staff=True)
-    serializer_class = UserSerializer
-
-
-class StaffDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAdmin,)
-    queryset = User.objects.filter(is_staff=True)
-    serializer_class = UserSerializer
-
-
-class TripListAdmin(generics.ListCreateAPIView):
-    permissions = (IsAdmin,)
-    queryset = Trip.objects.all()
-    serializer_class = TripSerializer
-
-
-class TripDetailAdmin(generics.RetrieveUpdateDestroyAPIView):
-    permissions = (IsAdmin,)
-    queryset = Trip.objects.all()
-    serializer_class = TripSerializer
-
-
 @api_view(['GET'])
-def isUserAuthenticated(request):
-    return Response(bool(request.user.is_authenticated))
+def user_details(request):
+    authenticated = bool(request.user.is_authenticated)
 
-@api_view(['GET'])
-def userMetaInfo(request):
-    usertype = 'anonymous'
-    if request.user.is_authenticated:
+    if authenticated:
         if request.user.is_superuser:
-            usertype = 'admin'
+            user_type = 'admin'
         elif request.user.is_staff:
-            usertype = 'staff'
+            user_type = 'staff'
         else:
-            usertype = 'user'
+            user_type = 'user'
+    else:
+        user_type = 'anonymous'
 
-
-    return Response({
-        'userType': usertype,
+    data = {
+        'authenticated': authenticated,
+        'userType': user_type,
         'userName': request.user.username,
-    })
+    }
+
+    try:
+        if request.query_params['detailed'] == "true":
+            data.update(get_detailed_info(request.user))
+    except MultiValueDictKeyError:
+        pass
+
+    return Response(data)
+
+
+def get_detailed_info(user):
+    return {}
+
+
+@api_view(['POST'])
+@throttle_classes([RegistrationBurstRateThrottle, RegistrationSustainedRateThrottle])
+def register(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

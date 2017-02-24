@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+    <title> Developer </title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.min.css">
+    <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.semanticui.min.css" /> {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "webapp/css/jquery.datetimepicker.css" %}">
+<!--     <link rel="stylesheet" type="text/css" href="{% static "webapp/css/admin.css" %}"> -->
+	{% block load_css_file %}
+	{% endblock %}
+</head>
+
+<body>
+    <div class="ui basic icon top fixed borderless menu own-menu-bar" style="background: white">
+        <div class="item">
+            <i class="bar chart big icon own-site-icon"></i>
+        </div>
+        {% block load_menu_bar %}
+		{% endblock %}
+
+	</div>
+	 <div class="ui container">
+        <div id='own-table-content'>
+        </div>
+    </div>
+
+    {% block load_modal %}
+	{% endblock %}
+
+<!-- All the static file dependencies -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.semanticui.min.js"></script>
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+    <script type="text/javascript" src="{%static "webapp/js/global-dependency/jquery.datetimepicker.full.min.js" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/global-dependency/settings.json" %}"></script>
+    <script type="text/javascript" src="{%static "webapp/js/global-dependency/common.js" %}"></script>    
+    <!-- <script type="text/javascript" src="{% static "webapp/js/admin.js" %}"></script> -->
+    {% block load_js_file %}
+	{% endblock %}
+</body>
+</html>
